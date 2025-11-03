@@ -21,20 +21,28 @@ const Signup = () => {
       <br /><br /><br /><br /><br /><br /><br /><br />
 
       <form className=' flex flex-col justify-center items-center gap-1.5 absolute top-0.5 left-1/2 -translate-x-1/2 translate-y-1/2 bg-gray-200 rounded  p-10'>
-        <div>
-            <input type="text" placeholder="name" />
-            <input type="text" placeholder="last name" />
-            <input type="email" placeholder="Email" />
-            <div className='flex'>
-                <input type={showPassword ? "text" : "password"} placeholder="password" />
-                <button
-                    type='button'
-                    onClick={() => setShowPassword(!showPassword)}
-                    aria-label={showPassword ? "Hide password" : "Show password"}
-                    ><p className='hider' >
-                        {showPassword ? "🙈" : "👁️"}
-                    </p>
-                </button>
+        <div className='flex flex-col justify-center items-center'>
+            <h3 className='mb-5'>Sign Up</h3>
+            <hr />
+            <div className='mt-2'>
+                <div className='mb-5 names flex items-center justify-center gap-2'>
+                    <input className='border-b-2 border-gray-500 border-t-0 border-l-0 border-r-0 rounded p-2 hover:border-gray-500' type="text" placeholder="name" />
+                    <input className='border-b-2 border-gray-500 border-t-0 border-l-0 border-r-0 rounded p-2 active:border-gray-500' type="text" placeholder="last name" />
+                </div>
+                <div className='email-&-password flex gap-1.5'>
+                    <input className='bg-gray-200 border-b-2 border-gray-500 border-t-0 border-l-0 border-r-0 rounded p-2 active:border-gray-500' type="email" placeholder="Email" />
+                    <div className='flex flex-row w-2'>
+                        <input className='bg-gray-200 border-b-2 border-gray-500 border-t-0 border-l-0 border-r-0 rounded p-2 active:border-gray-500' type={showPassword ? "text" : "password"} placeholder="password" />
+                        <button
+                            type='button'
+                            onClick={() => setShowPassword(!showPassword)}
+                            aria-label={showPassword ? "Hide password" : "Show password"}
+                            ><p className='hider cursor-pointer bg-gray-200 rounded-4xl' >
+                                {showPassword ? "🙈" : "👁️"}
+                            </p>
+                        </button>
+                    </div>
+                </div>
             </div>
             
         </div>
@@ -43,6 +51,7 @@ const Signup = () => {
             <label>National ID :</label>
             <br />
             <input
+            className='border-b-2 border-gray-500 border-t-0 border-l-0 border-r-0 rounded p-2 hover:border-gray-500'
             type="text"
             value={value}
             onChange={handleChange}
@@ -62,8 +71,8 @@ const Signup = () => {
             </select>
         </div>
 
-        <div>
-            <h3>Gender :</h3>
+        <div className='items-center'>
+            <h3 className='items-start'>Gender :</h3>
             <label>
             <input
                 type="radio"
@@ -74,8 +83,8 @@ const Signup = () => {
             />
             male
             </label>
-
-            <label style={{ marginLeft: "10px" }}>
+            <br />
+            <label>
             <input
                 type="radio"
                 name="gender"
@@ -86,7 +95,7 @@ const Signup = () => {
             female
             </label>
         </div>
-              <input className='cursor-pointer' type="submit" id='submit' />
+              <input className='cursor-pointer bg-blue-500 px-3 py-2 mt-2 rounded-3xl text-white' type="submit" id='submit' />
 
       </form>
     </div>
