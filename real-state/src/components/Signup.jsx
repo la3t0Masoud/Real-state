@@ -31,9 +31,10 @@ const Signup = () => {
                 </div>
                 <div className='email-&-password flex gap-1.5'>
                     <input className='bg-gray-200 border-b-2 border-gray-500 border-t-0 border-l-0 border-r-0 rounded p-2 active:border-gray-500' type="email" placeholder="Email" />
-                    <div className='flex flex-row w-2'>
-                        <input className='bg-gray-200 border-b-2 border-gray-500 border-t-0 border-l-0 border-r-0 rounded p-2 active:border-gray-500' type={showPassword ? "text" : "password"} placeholder="password" />
+                    <div className='relative w-full max-w-sm'>
+                        <input className='w-full border-gray-500 p-2 pr-10 border-b-2 border-l-0 border-t-0 border-r-0 rounded focus:outline-none focus:ring-2' type={showPassword ? "text" : "password"} placeholder="password" />
                         <button
+                        className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer select-none"
                             type='button'
                             onClick={() => setShowPassword(!showPassword)}
                             aria-label={showPassword ? "Hide password" : "Show password"}
@@ -48,7 +49,7 @@ const Signup = () => {
         </div>
 
         <div>
-            <label>National ID :</label>
+            <h3 className='' >National ID :</h3>
             <br />
             <input
             className='border-b-2 border-gray-500 border-t-0 border-l-0 border-r-0 rounded p-2 hover:border-gray-500'
