@@ -20,7 +20,7 @@ const Signup = () => {
       <Navbar />
       <br /><br /><br /><br /><br /><br /><br /><br />
 
-      <form className=' flex flex-col justify-center items-center gap-1.5 absolute top-0.5 left-1/2 -translate-x-1/2 translate-y-1/2 bg-gray-200 rounded  p-10'>
+      <form className=' flex flex-col justify-center items-center gap-1.5 absolute top-0.5 left-1/2 -translate-x-1/2 translate-y-1/2 bg-gray-200 rounded p-10'>
         <div className='flex flex-col justify-center items-center'>
             <h3 className='mb-5'>Sign Up</h3>
             <hr />
