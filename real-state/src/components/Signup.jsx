@@ -60,8 +60,6 @@ const Signup = () => {
 
   try {
     await validationSchema.validate(formData, { abortEarly: false });
-    console.log("Form submitted", formData);
-    console.log("Gender selected:", formData.gender);
   } catch (error) {
     const newErrors = {};
     error.inner.forEach((err) => {
@@ -151,10 +149,11 @@ const Signup = () => {
     <>
     <Navbar />
     <ToastContainer/>
-    <div className='mb-5 bg-gray-200'>
-      <form onSubmit={handleSubmit} className='flex flex-col justify-center items-center gap-3 absolute top-1 left-1/2 -translate-x-1/2 translate-y-1/5 bg-gray-200 rounded p-6 max-w-[500px] w-full mb-5'>
+    <div className='min-h-screen flex justify-center items-center bg-gray-200 mt-5'>
+      <form onSubmit={handleSubmit} 
+            className='flex flex-col justify-center items-center gap-3 bg-gray-200 rounded p-6 max-w-[500px] w-full'>
         <div className='flex flex-col justify-center items-center w-full'>
-          <h3 className='mb-5 text-xl'>Sign Up</h3>
+          <h3 className='mb-5 text-4xl underline' >Sign Up</h3>
           <hr />
           <div className='mt-2 w-full'>
             <div className='mb-5 names flex flex-col items-center justify-center gap-3 w-full'>

@@ -16,7 +16,7 @@ function Navbar(){
     };
   },[showMobileMenu])
   return (
-    <div className='absolute top-0 left-0 w-full z-10 bg-black' >  
+    <div className='absolute top-0 left-0 w-full z-10 bg-gray-800' >  
       <div className='container mx-auto flex justify-between items-center py-4 px-6 md:px-20 lg:px-32 bg-transparent gap-7'  >
         <Link to='/'> <img src={assets.logo} alt=""/></Link>
         <ul className='hidden md:flex gap-7 text-white ' >
@@ -38,7 +38,7 @@ function Navbar(){
           <a onClick={()=>{setshowMobileMenu(false)}} href="#About" className='px-4 py-2 rounded-full inline-block'>About</a>
           <a onClick={()=>{setshowMobileMenu(false)}} href="#Projects" className='px-4 py-2 rounded-full inline-block'>Projects</a>
           <a onClick={()=>{setshowMobileMenu(false)}} href="#Testimonails" className='px-4 py-2 rounded-full inline-block'>Testimonails</a>
-          <Link to='/SignUp'><a onClick={()=>{setshowMobileMenu(false)}} className='px-4 py-2 rounded-full inline-block'>Sign Up</a></Link>
+          <Link to='/SignUp'><a onClick={()=>{setshowMobileMenu(false)}} className='px-4 py-2 rounded-full inline-block bg-blue-300'>Sign Up</a></Link>
         </ul>
       </div>
     </div>
