@@ -1,13 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import * as Yup from 'yup';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const Signup = () => {
-  const [city, setCity] = useState("");
-  const [gender, setGender] = useState("");
-  const [value, setValue] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
+  const [touched, setTouched] = useState({
+    firstName: false,
+    lastName: false,
+    email: false,
+    password: false,
+    nationalID: false,
+    city: false,
+    gender: false,
+  });
 
   const validationSchema = Yup.object({
     firstName: Yup.string().required("First name is required"),
@@ -27,7 +36,6 @@ const Signup = () => {
     gender: Yup.string().required("Gender is required"),
   });
 
-
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -38,40 +46,82 @@ const Signup = () => {
     gender: "",
   });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await validationSchema.validate(formData, { abortEarly: false });
-      console.log("Form submitted", formData);
-      console.log("Gender selected:", formData.gender);
-    } catch (error) {
-      const newErrors = {};
-      error.inner.forEach((err) => {
-        newErrors[err.path] = err.message;
-      });
-      setErrors(newErrors);
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  setTouched({
+    firstName: true,
+    lastName: true,
+    email: true,
+    password: true,
+    nationalID: true,
+    city: true,
+    gender: true,
+  });
+
+  try {
+    await validationSchema.validate(formData, { abortEarly: false });
+    console.log("Form submitted", formData);
+    console.log("Gender selected:", formData.gender);
+  } catch (error) {
+    const newErrors = {};
+    error.inner.forEach((err) => {
+      newErrors[err.path] = err.message;
+    });
+    setErrors(newErrors);
+
+    if (newErrors.firstName) {
+      toast.error(newErrors.firstName);
     }
-  };
+    if (newErrors.lastName) {
+      toast.error(newErrors.lastName);
+    }
+    if (newErrors.email) {
+      toast.error(newErrors.email);
+    }
+    if (newErrors.password) {
+      toast.error(newErrors.password);
+    }
+    if (newErrors.nationalID) {
+      toast.error(newErrors.nationalID);
+    }
+    if (newErrors.city) {
+      toast.error(newErrors.city);
+    }
+    if (newErrors.gender) {
+      toast.error(newErrors.gender);
+    }
+  }
+};
 
 
   const handleChange = (e) => {
-  const { name, value } = e.target;
+    const { name, value } = e.target;
 
-  if (name === "nationalID") {
-    if (/^\d*$/.test(value)) {
+     if (name === "nationalID") {
+      if (/^\d*$/.test(value)) {
+       setFormData({
+      ...formData,
+      [name]: value,
+      });
+
+        setTouched({
+          ...touched,
+          [name]: true,
+        });
+      }
+    } else {
       setFormData({
         ...formData,
         [name]: value,
       });
+      setTouched({
+        ...touched,
+        [name]: true,
+      });
     }
-  } else {
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  }
-};
 
+    
+  };
 
   const handleCityChange = (e) => {
     const { value } = e.target;
@@ -79,11 +129,11 @@ const Signup = () => {
       ...formData,
       city: value,
     });
+    setTouched({
+      ...touched,
+      city: true,
+    });
   };
-
-
-
-
 
   const handleGenderChange = (e) => {
     const { value } = e.target;
@@ -91,43 +141,46 @@ const Signup = () => {
       ...formData,
       gender: value,
     });
+    setTouched({
+      ...touched,
+      gender: true,
+    });
   };
 
   return (
-    <div>
-      <Navbar />
-      <form onSubmit={handleSubmit} className='flex flex-col justify-center items-center gap-3 absolute top-1 mr-1 left-1/2 -translate-x-1/2 translate-y-1/5 bg-gray-200 rounded p-6 max-w-[500px] w-full mt-6 mb-6'>
+    <>
+    <Navbar />
+    <ToastContainer/>
+    <div className='mb-5 bg-gray-200'>
+      <form onSubmit={handleSubmit} className='flex flex-col justify-center items-center gap-3 absolute top-1 left-1/2 -translate-x-1/2 translate-y-1/5 bg-gray-200 rounded p-6 max-w-[500px] w-full mb-5'>
         <div className='flex flex-col justify-center items-center w-full'>
           <h3 className='mb-5 text-xl'>Sign Up</h3>
           <hr />
-          <div className='mt-2'>
+          <div className='mt-2 w-full'>
             <div className='mb-5 names flex flex-col items-center justify-center gap-3 w-full'>
               <input
-                className='border-b-2 border-gray-500 p-2 w-full'
+                className='border-b-2 border-gray-500 p-2 w-full rounded'
                 type="text"
                 placeholder="First Name"
                 value={formData.firstName}
                 onChange={handleChange}
                 name="firstName" />
-              {errors.firstName && <p className="text-red-500">{errors.firstName}</p>}
               <input
                 onChange={handleChange}
                 name='lastName'
-                className='border-b-2 border-gray-500 p-2 w-full'
+                className='border-b-2 border-gray-500 p-2 w-full rounded'
                 type="text"
                 placeholder="Last Name"
                 value={formData.lastName} />
-              {errors.lastName && <p className="text-red-500">{errors.lastName}</p>}
             </div>
             <div className='email-&-password flex flex-col gap-3 w-full'>
               <input
                 name='email'
                 onChange={handleChange}
-                className='bg-gray-200 border-b-2 border-gray-500 p-2 w-full'
+                className='bg-gray-200 border-b-2 border-gray-500 p-2 w-full rounded'
                 type="email"
                 placeholder="Email"
                 value={formData.email} />
-              {errors.email && <p className="text-red-500 items-center">{errors.email}</p>}
               <div className='relative w-full'>
                 <input
                   name='password'
@@ -136,7 +189,6 @@ const Signup = () => {
                   className='w-full border-gray-500 p-2 pr-10 border-b-2 rounded focus:outline-none'
                   type={showPassword ? "text" : "password"}
                   placeholder="Password" />
-                {errors.password && <p className="text-red-500">{errors.password}</p>}
                 <button
                   className="absolute right-3 top-1/2 -translate-y-1/2"
                   type='button'
@@ -155,22 +207,21 @@ const Signup = () => {
           <input
             onChange={handleChange}
             name='nationalID'
-            className='border-b-2 border-gray-500 p-2 w-full'
+            className='border-b-2 border-gray-500 p-2 w-full rounded'
             type="text"
             value={formData.nationalID}
             placeholder="Enter your ID"
           />
-          {errors.nationalID && <p className="text-red-500">{errors.nationalID}</p>}
         </div>
 
-        <div className='md:w-1/2 w-full'>
+        <div className=' w-full mt-4'>
           <h3>City :</h3>
           <select
             id="city"
             name='city'
             value={formData.city}
             onChange={handleCityChange}
-            className='w-full border-b-2'>
+            className='w-full border-b-2 p-2 rounded'>
             <option value="">---Select---</option>
             <option value="Tehran">Tehran</option>
             <option value="Tabriz">Tabriz</option>
@@ -178,35 +229,34 @@ const Signup = () => {
             <option value="Mashhad">Mashhad</option>
             <option value="Shiraz">Shiraz</option>
           </select>
-          {errors.city && <p className="text-red-500">{errors.city}</p>}
         </div>
 
-       <div className='w-full'>
-        <h3>Gender :</h3>
-        <label>
-          <input
-            type="radio"
-            name="gender"
-            value="male"
-            checked={formData.gender === "male"}
-            onChange={handleGenderChange}
-          />
-          Male
-        </label>
-        <br />
-        <label>
-          <input
-            type="radio"
-            name="gender"
-            value="female"
-            checked={formData.gender === "female"}
-            onChange={handleGenderChange}
-          />
-          Female
-        </label>
-        {errors.gender && <p className="text-red-500">{errors.gender}</p>}
-      </div>
-
+        <div className='w-full'>
+          <h3>Gender :</h3>
+          <div className='ml-5 mt-2'>
+            <label>
+            <input
+              type="radio"
+              name="gender"
+              value="male"
+              checked={formData.gender === "male"}
+              onChange={handleGenderChange}
+            />
+            Male
+          </label>
+          <br />
+          <label>
+            <input
+              type="radio"
+              name="gender"
+              value="female"
+              checked={formData.gender === "female"}
+              onChange={handleGenderChange}
+            />
+            Female
+          </label>
+          </div>
+        </div>
 
         <input
           className='cursor-pointer bg-blue-500 px-6 py-3 mt-4 rounded-3xl text-white w-full'
@@ -214,6 +264,7 @@ const Signup = () => {
           id='submit' />
       </form>
     </div>
+    </>
   );
 };
 
