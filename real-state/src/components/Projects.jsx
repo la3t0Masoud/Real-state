@@ -30,7 +30,7 @@ const Projects = () => {
       initial={{opacity:0, x:-200}} 
       transition={{duration:1.2}} 
       whileInView={{opacity:1,x:0}} 
-      viewport={{once:true}} 
+      viewport={{once:false}} 
       className='container mx-auto py-4 pt-20 px-6 md:px-20 lg:px-32 my-20 w-full overflow-hidden' 
       id='Projects' >
 

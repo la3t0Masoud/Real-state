@@ -23,7 +23,11 @@ const Signup = () => {
   const validationSchema = Yup.object({
     firstName: Yup.string().required("First name is required"),
     lastName: Yup.string().required("Last name is required"),
-    email: Yup.string().email("Invalid email format").required("Email is required"),
+    email: Yup.string()
+    .email("Invalid email format")
+    .matches(/[@]/, "Email must have @")
+    .required("Email is required"),
+
     password: Yup.string()
       .required("Password is required")
       .min(8, "Password must be at least 8 characters")
@@ -160,7 +164,7 @@ const Signup = () => {
           <div className='mt-2 w-full'>
             <div className='mb-5 names flex flex-col items-center justify-center gap-3 w-full'>
               <input
-                className='border-b-2 border-gray-500 p-2 w-full rounded'
+                className='border-b-2 border-gray-500 p-2 w-full rounded focus:outline-none'
                 type="text"
                 placeholder="First Name"
                 value={formData.firstName}
@@ -169,7 +173,7 @@ const Signup = () => {
               <input
                 onChange={handleChange}
                 name='lastName'
-                className='border-b-2 border-gray-500 p-2 w-full rounded'
+                className='border-b-2 border-gray-500 p-2 w-full rounded focus:outline-none'
                 type="text"
                 placeholder="Last Name"
                 value={formData.lastName} />
@@ -178,7 +182,7 @@ const Signup = () => {
               <input
                 name='email'
                 onChange={handleChange}
-                className='bg-gray-200 border-b-2 border-gray-500 p-2 w-full rounded'
+                className='bg-gray-200 border-b-2 border-gray-500 p-2 w-full rounded focus:outline-none'
                 type="email"
                 placeholder="Email"
                 value={formData.email} />
@@ -203,12 +207,12 @@ const Signup = () => {
           </div>
         </div>
 
-        <div className='w-full'>
-          <h3>National ID :</h3>
+        <div className='w-full mt-5'>
+          <h3 >National ID :</h3>
           <input
             onChange={handleChange}
             name='nationalID'
-            className='border-b-2 border-gray-500 p-2 w-full rounded'
+            className='border-b-2 border-gray-500 p-2 w-full rounded focus:outline-none'
             type="text"
             value={formData.nationalID}
             placeholder="Enter your ID"
@@ -222,7 +226,7 @@ const Signup = () => {
             name='city'
             value={formData.city}
             onChange={handleCityChange}
-            className='w-full border-b-2 p-2 rounded'>
+            className='w-full border-b-2 p-2 rounded focus:outline-none'>
             <option value="">---Select---</option>
             <option value="Tehran">Tehran</option>
             <option value="Tabriz">Tabriz</option>
@@ -242,7 +246,7 @@ const Signup = () => {
               value="male"
               checked={formData.gender === "male"}
               onChange={handleGenderChange}
-            />
+            /><span> </span>
             Male
           </label>
           <br />
@@ -253,7 +257,7 @@ const Signup = () => {
               value="female"
               checked={formData.gender === "female"}
               onChange={handleGenderChange}
-            />
+            /><span> </span>
             Female
           </label>
           </div>

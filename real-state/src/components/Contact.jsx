@@ -31,7 +31,7 @@ const Contact = () => {
         }
     };
   return (
-    <motion.div initial={{opacity:0, x:-150}} transition={{duration:1.2}} whileInView={{opacity:1,x:0}} viewport={{once:true}} className='text-center p-6 py-20 lg:px-32 w-full overflow-hidden' id='Contact'>
+    <motion.div initial={{opacity:0, x:-150}} transition={{duration:1.2}} whileInView={{opacity:1,x:0}} viewport={{once:false}} className='text-center p-6 py-20 lg:px-32 w-full overflow-hidden' id='Contact'>
         <h1 className='text-2xl sm:text-4xl font-bold mb-2 text-center'>
             Contact
             <span className='underline underline-offset-4 decoration-1 under font-light'>
