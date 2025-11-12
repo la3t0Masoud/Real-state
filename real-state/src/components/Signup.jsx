@@ -3,6 +3,8 @@ import Navbar from './Navbar';
 import * as Yup from 'yup';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {motion} from "framer-motion"
+
 
 
 const Signup = () => {
@@ -150,7 +152,7 @@ const Signup = () => {
     <Navbar />
     <ToastContainer/>
     <div className='min-h-screen flex justify-center items-center bg-gray-200 mt-5'>
-      <form onSubmit={handleSubmit} 
+      <motion.form initial={{opacity:0,y:100}} transition={{duration:1}} whileInView={{opacity:1,y:0}} viewport={{once:true}} onSubmit={handleSubmit} 
             className='flex flex-col justify-center items-center gap-3 bg-gray-200 rounded p-6 max-w-[500px] w-full'>
         <div className='flex flex-col justify-center items-center w-full'>
           <h3 className='mb-5 text-4xl underline' >Sign Up</h3>
@@ -261,7 +263,7 @@ const Signup = () => {
           className='cursor-pointer bg-blue-500 px-6 py-3 mt-4 rounded-3xl text-white w-full'
           type="submit"
           id='submit' />
-      </form>
+      </motion.form>
     </div>
     </>
   );
