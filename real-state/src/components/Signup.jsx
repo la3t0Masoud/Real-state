@@ -1,11 +1,9 @@
-import { useState } from 'react';
-import Navbar from './Navbar';
-import * as Yup from 'yup';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import {motion} from "framer-motion"
-
-
+import { useState } from "react";
+import Navbar from "./Navbar";
+import * as Yup from "yup";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { motion } from "framer-motion";
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -24,14 +22,17 @@ const Signup = () => {
     firstName: Yup.string().required("First name is required"),
     lastName: Yup.string().required("Last name is required"),
     email: Yup.string()
-    .email("Invalid email format")
-    .matches(/[@]/, "Email must have @")
-    .required("Email is required"),
+      .email("Invalid email format")
+      .matches(/[@]/, "Email must have @")
+      .required("Email is required"),
 
     password: Yup.string()
       .required("Password is required")
       .min(8, "Password must be at least 8 characters")
-      .matches(/[!@#$%^&*(),.>":{}|<>]/, "Password must contain at least one symbol")
+      .matches(
+        /[!@#$%^&*(),.>":{}|<>]/,
+        "Password must contain at least one symbol"
+      )
       .matches(/[0-9]/, "Password must contain at least one number")
       .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
       .matches(/[a-z]/, "Password must contain at least one lowercase letter"),
@@ -52,61 +53,60 @@ const Signup = () => {
     gender: "",
   });
 
- const handleSubmit = async (e) => {
-  e.preventDefault();
-  setTouched({
-    firstName: true,
-    lastName: true,
-    email: true,
-    password: true,
-    nationalID: true,
-    city: true,
-    gender: true,
-  });
-
-  try {
-    await validationSchema.validate(formData, { abortEarly: false });
-  } catch (error) {
-    const newErrors = {};
-    error.inner.forEach((err) => {
-      newErrors[err.path] = err.message;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setTouched({
+      firstName: true,
+      lastName: true,
+      email: true,
+      password: true,
+      nationalID: true,
+      city: true,
+      gender: true,
     });
-    setErrors(newErrors);
 
-    if (newErrors.firstName) {
-      toast.error(newErrors.firstName);
-    }
-    if (newErrors.lastName) {
-      toast.error(newErrors.lastName);
-    }
-    if (newErrors.email) {
-      toast.error(newErrors.email);
-    }
-    if (newErrors.password) {
-      toast.error(newErrors.password);
-    }
-    if (newErrors.nationalID) {
-      toast.error(newErrors.nationalID);
-    }
-    if (newErrors.city) {
-      toast.error(newErrors.city);
-    }
-    if (newErrors.gender) {
-      toast.error(newErrors.gender);
-    }
-  }
-};
+    try {
+      await validationSchema.validate(formData, { abortEarly: false });
+    } catch (error) {
+      const newErrors = {};
+      error.inner.forEach((err) => {
+        newErrors[err.path] = err.message;
+      });
+      setErrors(newErrors);
 
+      if (newErrors.firstName) {
+        toast.error(newErrors.firstName);
+      }
+      if (newErrors.lastName) {
+        toast.error(newErrors.lastName);
+      }
+      if (newErrors.email) {
+        toast.error(newErrors.email);
+      }
+      if (newErrors.password) {
+        toast.error(newErrors.password);
+      }
+      if (newErrors.nationalID) {
+        toast.error(newErrors.nationalID);
+      }
+      if (newErrors.city) {
+        toast.error(newErrors.city);
+      }
+      if (newErrors.gender) {
+        toast.error(newErrors.gender);
+      }
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-     if (name === "nationalID") {
+    if (name === "nationalID") {
       if (/^\d*$/.test(value)) {
-       setFormData({
-      ...formData,
-      [name]: value,
-      });
+        setFormData({
+          ...formData,
+          [name]: value,
+        });
 
         setTouched({
           ...touched,
@@ -123,8 +123,6 @@ const Signup = () => {
         [name]: true,
       });
     }
-
-    
   };
 
   const handleCityChange = (e) => {
@@ -153,122 +151,135 @@ const Signup = () => {
 
   return (
     <>
-    <Navbar />
-    <ToastContainer/>
-    <div className='min-h-screen flex justify-center items-center bg-gray-200 mt-5'>
-      <motion.form initial={{opacity:0,y:100}} transition={{duration:1}} whileInView={{opacity:1,y:0}} viewport={{once:true}} onSubmit={handleSubmit} 
-            className='flex flex-col justify-center items-center gap-3 bg-gray-200 rounded p-6 max-w-[500px] w-full'>
-        <div className='flex flex-col justify-center items-center w-full'>
-          <h3 className='mb-5 text-4xl underline' >Sign Up</h3>
-          <hr />
-          <div className='mt-2 w-full'>
-            <div className='mb-5 names flex flex-col items-center justify-center gap-3 w-full'>
-              <input
-                className='border-b-2 border-gray-500 p-2 w-full rounded focus:outline-none'
-                type="text"
-                placeholder="First Name"
-                value={formData.firstName}
-                onChange={handleChange}
-                name="firstName" />
-              <input
-                onChange={handleChange}
-                name='lastName'
-                className='border-b-2 border-gray-500 p-2 w-full rounded focus:outline-none'
-                type="text"
-                placeholder="Last Name"
-                value={formData.lastName} />
-            </div>
-            <div className='email-&-password flex flex-col gap-3 w-full'>
-              <input
-                name='email'
-                onChange={handleChange}
-                className='bg-gray-200 border-b-2 border-gray-500 p-2 w-full rounded focus:outline-none'
-                type="email"
-                placeholder="Email"
-                value={formData.email} />
-              <div className='relative w-full'>
+      <Navbar />
+      <ToastContainer />
+      <div className="min-h-screen flex justify-center items-center bg-gray-200 mt-5">
+        <motion.form
+          initial={{ opacity: 0, y: 100 }}
+          transition={{ duration: 1 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          onSubmit={handleSubmit}
+          className="flex flex-col justify-center items-center gap-3 bg-gray-200 rounded p-6 max-w-[500px] w-full">
+          <div className="flex flex-col justify-center items-center w-full">
+            <h3 className="mb-5 text-4xl underline">Sign Up</h3>
+            <hr />
+            <div className="mt-2 w-full">
+              <div className="mb-5 names flex flex-col items-center justify-center gap-3 w-full">
                 <input
-                  name='password'
+                  className="border-b-2 border-gray-500 p-2 w-full rounded focus:outline-none"
+                  type="text"
+                  placeholder="First Name"
+                  value={formData.firstName}
                   onChange={handleChange}
-                  value={formData.password}
-                  className='w-full border-gray-500 p-2 pr-10 border-b-2 rounded focus:outline-none'
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Password" />
-                <button
-                  className="absolute right-3 top-1/2 -translate-y-1/2"
-                  type='button'
-                  onClick={() => setShowPassword(!showPassword)}
-                  aria-label={showPassword ? "Hide password" : "Show password"}
-                >
-                  {showPassword ? "🙈" : "👁️"}
-                </button>
+                  name="firstName"
+                />
+                <input
+                  onChange={handleChange}
+                  name="lastName"
+                  className="border-b-2 border-gray-500 p-2 w-full rounded focus:outline-none"
+                  type="text"
+                  placeholder="Last Name"
+                  value={formData.lastName}
+                />
+              </div>
+              <div className="email-&-password flex flex-col gap-3 w-full">
+                <input
+                  name="email"
+                  onChange={handleChange}
+                  className="bg-gray-200 border-b-2 border-gray-500 p-2 w-full rounded focus:outline-none"
+                  type="email"
+                  placeholder="Email"
+                  value={formData.email}
+                />
+                <div className="relative w-full">
+                  <input
+                    name="password"
+                    onChange={handleChange}
+                    value={formData.password}
+                    className="w-full border-gray-500 p-2 pr-10 border-b-2 rounded focus:outline-none"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Password"
+                  />
+                  <button
+                    className="absolute right-3 top-1/2 -translate-y-1/2"
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    aria-label={
+                      showPassword ? "Hide password" : "Show password"
+                    }>
+                    {showPassword ? "🙈" : "👁️"}
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className='w-full mt-5'>
-          <h3 >National ID :</h3>
-          <input
-            onChange={handleChange}
-            name='nationalID'
-            className='border-b-2 border-gray-500 p-2 w-full rounded focus:outline-none'
-            type="text"
-            value={formData.nationalID}
-            placeholder="Enter your ID"
-          />
-        </div>
-
-        <div className=' w-full mt-4'>
-          <h3>City :</h3>
-          <select
-            id="city"
-            name='city'
-            value={formData.city}
-            onChange={handleCityChange}
-            className='w-full border-b-2 p-2 rounded focus:outline-none'>
-            <option value="">---Select---</option>
-            <option value="Tehran">Tehran</option>
-            <option value="Tabriz">Tabriz</option>
-            <option value="Esfahan">Esfahan</option>
-            <option value="Mashhad">Mashhad</option>
-            <option value="Shiraz">Shiraz</option>
-          </select>
-        </div>
-
-        <div className='w-full'>
-          <h3>Gender :</h3>
-          <div className='ml-5 mt-2'>
-            <label>
+          <div className="w-full mt-5">
+            <h3>National ID :</h3>
             <input
-              type="radio"
-              name="gender"
-              value="male"
-              checked={formData.gender === "male"}
-              onChange={handleGenderChange}
-            /><span> </span>
-            Male
-          </label>
-          <br />
-          <label>
-            <input
-              type="radio"
-              name="gender"
-              value="female"
-              checked={formData.gender === "female"}
-              onChange={handleGenderChange}
-            /><span> </span>
-            Female
-          </label>
+              onChange={handleChange}
+              name="nationalID"
+              className="border-b-2 border-gray-500 p-2 w-full rounded focus:outline-none"
+              type="text"
+              value={formData.nationalID}
+              placeholder="Enter your ID"
+            />
           </div>
-        </div>
 
-        <input
-          className='cursor-pointer bg-blue-500 px-6 py-3 mt-4 rounded-3xl text-white w-full'
-          type="submit"
-          id='submit' />
-      </motion.form>
-    </div>
+          <div className=" w-full mt-4">
+            <h3>City :</h3>
+            <select
+              id="city"
+              name="city"
+              value={formData.city}
+              onChange={handleCityChange}
+              className="w-full border-b-2 p-2 rounded focus:outline-none">
+              <option value="">---Select---</option>
+              <option value="Tehran">Tehran</option>
+              <option value="Tabriz">Tabriz</option>
+              <option value="Esfahan">Esfahan</option>
+              <option value="Mashhad">Mashhad</option>
+              <option value="Shiraz">Shiraz</option>
+            </select>
+          </div>
+
+          <div className="w-full">
+            <h3>Gender :</h3>
+            <div className="ml-5 mt-2">
+              <label>
+                <input
+                  type="radio"
+                  name="gender"
+                  value="male"
+                  checked={formData.gender === "male"}
+                  onChange={handleGenderChange}
+                />
+                <span> </span>
+                Male
+              </label>
+              <br />
+              <label>
+                <input
+                  type="radio"
+                  name="gender"
+                  value="female"
+                  checked={formData.gender === "female"}
+                  onChange={handleGenderChange}
+                />
+                <span> </span>
+                Female
+              </label>
+            </div>
+          </div>
+
+          <input
+            className="cursor-pointer bg-blue-500 px-6 py-3 mt-4 rounded-3xl text-white w-full"
+            type="submit"
+            id="submit"
+          />
+        </motion.form>
+      </div>
     </>
   );
 };
